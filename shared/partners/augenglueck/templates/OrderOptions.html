@@ -1,0 +1,113 @@
+<style>
+    .small-input {
+        width: 50px;
+        display: inline;
+    }
+    .extras-table {
+        display: block;
+        max-height: 450px;
+        overflow-y: scroll;
+    }
+
+    .extras-table::-webkit-scrollbar {
+        width: 1px;
+    }
+
+    .extras-table::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    }
+
+    .extras-table::-webkit-scrollbar-thumb {
+        background-color: darkgrey;
+        outline: 1px solid slategrey;
+    }
+    .calculate_final {
+        background: #e46c0b;
+        color: white !important;
+    }
+</style>
+<div ng-controller="orderOptionsController" ng-swipe-left="nextStep('enterCustomerInformation')">
+    <form>
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Bestelloptionen</h1>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h2 class="col-sm-6" style="text-align: center;" ng-show="isFrame">Fassung</h2>
+                        <h2 class="col-sm-6 pull-right" style="color: #e46c0b; text-align: center;" ng-hide="auction">Aktion!</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="content">
+                <!-- Here the Extras will be injected by augenglueck.js -->
+            </div>
+            <div class="extras col-sm-5" ng-show="isFrame">
+                <table class="table">
+                    <tbody class="extras-table">
+                        <tr ng-repeat="frameOption in frameOptions" id="{{frameOption.name}}" class="frames">
+                            <th ng-click="selectFrame(frameOption)">{{frameOption.name}}</th>
+                            <td class="calculation_price" ng-click="selectFrame(frameOption)">{{frameOption.price}},-&nbsp;€</td>
+                            <td>
+                                <a href="">
+                                    <i class="glyphicon glyphicon-info-sign"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="calculation col-sm-6 pull-right" ng-show="$root.frameSelected">
+                <table class="table col-xs-12">
+                    <tbody>
+                        <tr>
+                            <th class="col-xs-3"> + Fassung</th>
+                            <td style="text-align: left;">{{$root.selectedFrame.name}}</td>
+                            <td class="calculate_price">{{selectedFrame.price}},-&nbsp;€</td>
+                        </tr>
+                        <tr ng-if="$root.isDiscount">
+                            <th>Rabatt</th>
+                            <td></td>
+                            <td class="calculate_price">
+                                <input id="discount" type="number" class="form-control" style="width: 50px; display: inline;" size="7" placeholder="{{initialDiscount}}" ng-model="$root.discountAmount" ng-change="calculateTotal()">
+                            </td>
+                        </tr>
+                        <tr class="calculate_final" ng-if="!$root.isDiscount">
+                            <th style="border-top: 1px solid black">Gesamt</th>
+                            <td style="border-top: 1px solid black"></td>
+                            <td style="border-top: 1px solid black" class="calculate_price">{{$root.totalAfterFrame}},-&nbsp;€</td>
+                        </tr>
+                        <tr class="calculate_final" ng-if="$root.isDiscount">
+                            <th style="border-top: 1px solid black;">Gesamt</th>
+                            <td style="border-top: 1px solid black;"></td>
+                            <td class="calculate_price" style="border-top: 1px solid black;">{{$root.totalAfterDiscount}},-&nbsp;€</td>
+                        </tr>
+                        <tr class="calculate_final" ng-if="$root.isFunding">
+                            <th style="border-top: 1px solid black" class="col-xs-3">Raten</th>
+                            <td style="border-top: 1px solid black; text-align: left;">{{$root.fundingMounts}}&nbsp;Monate</td>
+                            <td style="border-top: 1px solid black;" class="calculate_price">á&nbsp;{{$root.fundingAmount}}&nbsp;€</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br>
+        <button style="width:110px; margin-right:20px;" type="button" class="btn btn-default" ng-click="cancel()">Abbrechen</button>
+        <button style="width:110px; margin-right:20px;" type="submit" class="btn btn-primary" ng-if="!isFrame" ng-click="showFrames()">Weiter</button>
+        <button style="width:110px" type="submit" class="btn btn-primary" ng-if="isFrame" ng-click="nextStep('enterCustomerInformation')">Weiter</button>
+
+        <button style="width:110px" type="submit" class="btn btn-success" ng-if="!isFrame && $root.consultation" ng-click="goToConsultation()">Beratung</button>
+
+        <button style="width:110px; margin-left: 20px; margin-right:20px;" type="button" class="btn btn-default" ng-if="isFrame" ng-click="discount()">Rabatt</button>
+        <div class="dropup" style="display: inline" ng-if="isFrame">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Finanzierung
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" id="funding" aria-labelledby="dropdownMenu2">
+                <li ng-repeat="option in fundingOptions"><a ng-click="funding(option)">{{option}}&nbspMonate</a></li>
+            </ul>
+        </div>
+    </form>
+</div>

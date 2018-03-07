@@ -1,0 +1,310 @@
+<style>
+    .administration {
+        font-size : 195%;
+        font-weight: bold;
+    }
+    .orange {
+        background: #e46c0b;
+        color: white;
+    }
+    .td-index {
+        background: #595959;
+        color: white;
+    }
+    .td-price {
+        background: #ccc;
+    }
+    .category {
+        background: #ccc;
+    }
+    .nav.nav-tabs {
+        border-bottom: 1px solid #e46c0b;
+    }
+    .nav-item.active {
+        background: #e46c0b;
+        color: white;
+    }
+    .nav-item {
+        margin-bottom: 0;
+    }
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+        background: #e46c0b;
+        color: white !important;
+        border: none;
+    }
+    table {
+        border: 1px solid white;
+    }
+    #price-list {
+        margin-top: 37px;
+    }
+    .input-field:disabled {
+        padding: 0;
+        border: none;
+        background: #ccc;
+    }
+    .input-field {
+        border: none;
+        background: #ddd;
+    }
+    .input-field-price:disabled {
+        padding: 0;
+        border: none;
+        background: #e46c0b;
+        text-align: right;
+        width: 50%;
+        display: inline;
+    }
+    .input-field-price {
+        padding: 0;
+        border: none;
+        background: #ffb380;
+        text-align: right;
+        width: 50%;
+        display: inline;
+    }
+    .action-buttons {
+        background: rgba(239, 237, 237, 0.98);
+    }
+    ::placeholder {
+        color: white;
+    }
+    .price-table-head {
+        display: block;
+    }
+    .price-table {
+        display: block;
+        max-height: 400px;
+        overflow-y: scroll;
+    }
+
+    .price-table::-webkit-scrollbar {
+        width: 1px;
+    }
+
+    .price-table::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    }
+
+    .price-table::-webkit-scrollbar-thumb {
+        background-color: darkgrey;
+        outline: 1px solid slategrey;
+    }
+</style>
+<div ng-controller="pricingTableAdministrationController" ng-swipe-left="" ng-swipe-right=""
+    style="min-height: 80vh;">
+    <div class="alert alert-success no-print" style="position:fixed; width:95vw; height:4em; z-index: 500; top: 7em;" ng-hide="!marginGreen">
+        <div class="row">
+            <div class="col-xs-2 col-sm-1"><i class="fa fa-check"></i></div>
+            <div class="col-xs-8 col-sm-10">
+                <strong style="white-space: pre-line;">Ihre Aktion wurde erfolgreich im System gespeichert!</strong>
+            </div>
+            <div class="pull-right" style="padding-right: 15px; cursor: pointer;" ng-click="marginGreen = false"><i class="fa fa-times"></i></div>
+        </div>
+    </div>
+    <div class="alert alert-warning no-print" style="position:fixed; width:95vw; height:4em; z-index: 500; top: 7em;" ng-hide="!marginOrange">
+        <div class="row">
+            <div class="col-xs-2 col-sm-1"><i class="fa fa-check"></i></div>
+            <div class="col-xs-8 col-sm-10">
+                <strong style="white-space: pre-line;">Die Marge für den Produkt liegt bei {{margin}} Euro!</strong>
+            </div>
+            <div class="pull-right" style="padding-right: 15px; cursor: pointer;" ng-click="marginOrange = false"><i class="fa fa-times"></i></div>
+        </div>
+    </div>
+    <div class="alert alert-danger no-print" style="position:fixed; width:95vw; height:4em; z-index: 500; top: 7em;" ng-hide="!marginRed">
+        <div class="row">
+            <div class="col-xs-2 col-sm-1"><i class="fa fa-check"></i></div>
+            <div class="col-xs-8 col-sm-10">
+                <strong style="white-space: pre-line;">Die Marge für den Produkt liegt bei {{margin}} Euro!</strong>
+            </div>
+            <div class="pull-right" style="padding-right: 15px; cursor: pointer;" ng-click="marginRed = false"><i class="fa fa-times"></i></div>
+        </div>
+    </div>
+    <uib-tabset>
+        <uib-tab index="0" heading="Preislisten Verwaltung" class="administration">
+            <div class="row">
+                <div class="col-sm-5">
+                    <h3>Hersteller Preisliste</h3>
+                    <uib-tabset active="indextab">
+                        <uib-tab index="maker" ng-repeat="maker in makers" heading="{{maker.name}}">
+                            <table style="margin-top:15px; overflow: hidden" class="table table-responsive">
+                                <thead class="price-table-head">
+                                <tr>
+                                    <th class="col-sm-8">Name</th>
+                                    <th class="col-sm-2">Brechungsindex</th>
+                                    <th class="col-sm-2">Preis</th>
+                                </tr>
+                                </thead>
+                                <tbody class="price-table">
+                                <tr ng-repeat="product in maker.products" class="draggable {{product.refractivity}}" ng-click="productInfo()"
+                                    ng-mousedown="selectProductFromProducer(product, $event)"
+                                    ng-mousemove="dragElement($event)"
+                                    ng-touchstart="selectProductFromProducer(product, $event)"
+                                    ng-touchmove="moveElement($event)"
+                                    ng-touchend="replaceTargetElement($event)">
+                                    <td class="col-sm-8">{{product.name}}</td>
+                                    <td class="text-center td-index col-sm-3">{{product.refractivity}}</td>
+                                    <td class="text-center td-price col-sm-2">{{product.price.retail}},-&nbsp;€</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+                <div class="col-sm-7">
+                    <h3>Kundenverkaufspreisliste</h3>
+                    <uib-tabset active="active">
+                        <uib-tab index="category" ng-repeat="category in priceList track by $index" ng-init="categoryIndex = $index" heading="{{category.category}}">
+                            <div class="row" style="margin-top:15px">
+                                <div class="col-sm-12">
+                                    <table id="price-list" class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th class="col-sm-2">
+                                                <b>{{category.category}}</b>
+                                            </th>
+                                            <th class="text-center col-sm-2 orange" ng-repeat="heading in category.glasses[0].quality">{{heading.category}}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="glasses in category.glasses track by $index" ng-init="glassesIndex = $index">
+                                            <td class="td-index">
+                                                <b>Brechungsindex {{ glasses.refractivity }}</b>
+                                            </td>
+
+                                            <td ng-repeat="item in glasses.quality track by $index" ng-init="itemIndex = $index"
+                                                    class="text-center droppable ca{{categoryIndex}} gl{{glassesIndex}} it{{itemIndex}} td-price"
+                                                ng-mouseup="replaceProductFromPriceList(categoryIndex, glassesIndex, itemIndex)">
+                                                <span class="text-center droppable ca{{categoryIndex}} gl{{glassesIndex}} it{{itemIndex}} td-price"
+                                                      ng-if="item.auction.isSet !== '' && today >= item.auction.start && today <= item.auction.end">{{item.auction.price}},-&nbsp;€</span>
+                                                <span class="text-center droppable ca{{categoryIndex}} gl{{glassesIndex}} it{{itemIndex}} td-price"
+                                                      ng-if="!(item.auction.isSet !== '' && today >= item.auction.start && today <= item.auction.end)">{{item.price.retail !== -1 ? item.price.retail + ",- €" : ""}}</span>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="1" heading="Preisliste Detailliert" class="administration">
+            <div class="row">
+                <div class="col-sm-12">
+                    <uib-tabset>
+                        <uib-tab index="category" ng-repeat="category in priceList track by $index" heading="{{category.category}}" ng-init="categoryIndex = $index">
+                            <table class="table">
+                                <thead class="price-table-head">
+                                    <tr>
+                                        <th class="col-sm-4" style="color: white;">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</th>
+                                        <th class="col-sm-2">Kategorie</th>
+                                        <th class="col-sm-1">EK</th>
+                                        <th class="col-sm-1">UVP</th>
+                                        <th class="col-sm-1">VK</th>
+                                        <th class="col-sm-1">Marge</th>
+                                        <th class="col-sm-2">Bearbeiten</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="price-table" style="max-height: 480px;">
+                                    <tr ng-repeat-start="glasses in category.glasses track by $index" ng-init="glassesIndex = $index">
+                                        <th class="td-index" colspan="7">Brechungsindex {{glasses.refractivity}}</th>
+                                    </tr>
+                                    <tr ng-repeat-end ng-repeat="item in glasses.quality track by $index" ng-if="item.initialized == true" ng-init="itemIndex = $index">
+                                        <td class="col-sm-4">{{item.name}}</td>
+                                        <td class="col-sm-2 category">
+                                            <input type="text" class="input-field" required ng-model="priceList[categoryIndex].glasses[glassesIndex].quality[itemIndex].category"
+                                                   ng-change="changeCategoryName(categoryIndex, glassesIndex, itemIndex)"
+                                                   ng-disabled="itemIndex !== idSelectedItem || glassesIndex !== idSelectedGlasses">
+                                        </td>
+                                        <td class="col-sm-1 orange">{{item.price.purchase}},-&nbsp;€</td>
+                                        <td class="col-sm-1 orange">{{item.price.uvp}},-&nbsp;€</td>
+                                        <td class="col-sm-1 orange">
+                                            <div>
+                                            <input type="number" class="input-field-price" ng-model="priceList[categoryIndex].glasses[glassesIndex].quality[itemIndex].price.retail"
+                                                   ng-disabled="itemIndex !== idSelectedItem || glassesIndex !== idSelectedGlasses">,-&nbsp;€</div>
+                                        </td>
+                                        <td class="col-sm-1 orange">{{item.price.retail - item.price.purchase}},-&nbsp;€</td>
+                                        <td class="col-sm-2 action-buttons">
+                                            <button type="button" class="btn btn-default" ng-click="editPriceListItem(itemIndex, glassesIndex)" ng-show="itemIndex !== idSelectedItem || glassesIndex !== idSelectedGlasses">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-default" ng-click="savePriceListItem(itemIndex, glassesIndex)" ng-hide="itemIndex !== idSelectedItem || glassesIndex !== idSelectedGlasses">
+                                                <i class="fa fa-floppy-o"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-default" ng-click="deletePriceListItem(categoryIndex, glassesIndex, $index)">
+                                                <i class="fa fa-trash-o"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="2" heading="Aktionen Verwaltung" class="administration pull-right">
+            <div class="row">
+                <div class="col-sm-12">
+                    <uib-tabset>
+                        <uib-tab index="category" ng-repeat="category in priceList track by $index" heading="{{category.category}}" ng-init="categoryIndex = $index">
+                            <table class="table" style="table-layout:fixed; width: 100%">
+                                <thead class="price-table-head">
+                                <tr>
+                                    <th class="col-sm-3" style="color: white">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</th>
+                                    <th class="col-sm-2">Start</th>
+                                    <th class="col-sm-2">Ende</th>
+                                    <th class="col-sm-1">UVP</th>
+                                    <th class="col-sm-1">Preis</th>
+                                    <th class="col-sm-1">Marge</th>
+                                    <th class="col-sm-2">Bearbeiten</th>
+                                </tr>
+                                </thead>
+                                <tbody class="price-table" style="max-height: 480px;">
+                                    <tr ng-repeat-start="glasses in category.glasses track by $index" ng-init="glassesIndex = $index">
+                                        <th class="td-index" colspan="7">Brechungsindex {{glasses.refractivity}}</th>
+                                    </tr>
+                                    <tr ng-repeat-end ng-repeat="item in glasses.quality track by $index" ng-if="item.initialized == true" ng-init="itemIndex = $index">
+                                        <td class="col-sm-3">{{item.name}}</td>
+                                        <td class="col-sm-2 category">
+                                            <input type="date" class="input-field" ng-model="priceList[categoryIndex].glasses[glassesIndex].quality[itemIndex].auction.start"
+                                                   ng-required="item.auction.isSet" ng-change="setAuction(categoryIndex, glassesIndex, itemIndex)"
+                                                   ng-disabled="itemIndex !== idSelectedItem || glassesIndex !== idSelectedGlasses">
+                                        </td>
+                                        <td class="col-sm-2 category">
+                                            <input type="date" class="input-field" ng-model="priceList[categoryIndex].glasses[glassesIndex].quality[itemIndex].auction.end"
+                                                   ng-required="item.auction.isSet" ng-change="setAuction(categoryIndex, glassesIndex, itemIndex)"
+                                                   ng-disabled="itemIndex !== idSelectedItem || glassesIndex !== idSelectedGlasses">
+                                        </td>
+                                        <td class="col-sm-1 orange">{{item.price.uvp}},-&nbsp;€</td>
+                                        <td class="col-sm-1 orange">
+                                            <input type="number" class="input-field-price" ng-model="priceList[categoryIndex].glasses[glassesIndex].quality[itemIndex].auction.price"
+                                                   ng-required="item.auction.isSet" placeholder="{{item.auction.isSet ? item.auction.price : item.price.retail}}"
+                                                   ng-disabled="itemIndex !== idSelectedItem || glassesIndex !== idSelectedGlasses" ng-change="setAuction(categoryIndex, glassesIndex, itemIndex)">,-&nbsp;€
+                                        </td>
+                                        <td class="col-sm-1 orange" ng-if="item.auction.isSet">{{item.auction.price - item.price.purchase}},-&nbsp;€</td>
+                                        <td class="col-sm-1 orange" ng-if="!item.auction.isSet">{{item.price.retail - item.price.purchase}},-&nbsp;€</td>
+                                        <td class="col-sm-2 action-buttons">
+                                            <button type="button" class="btn btn-default" ng-click="editPriceListItem(itemIndex, glassesIndex)" ng-show="itemIndex !== idSelectedItem || glassesIndex !== idSelectedGlasses">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-default" ng-click="savePriceListItem(itemIndex, glassesIndex)" ng-hide="itemIndex !== idSelectedItem || glassesIndex !== idSelectedGlasses">
+                                                <i class="fa fa-floppy-o"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-default" ng-click="deleteAuction(categoryIndex, glassesIndex, itemIndex)">
+                                                <i class="fa fa-trash-o"></i>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+    </div>

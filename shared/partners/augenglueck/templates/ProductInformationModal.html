@@ -1,0 +1,26 @@
+<div class="modal-content modal-size">
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-sm-8">
+                <h3 class="modal-title" id="modal-title">Produkt Information</h3>
+            </div>
+            <div class="col-sm-4">
+                <button type="button" style="border: none" class="btn btn-default pull-right" ng-click="close()"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <uib-tabset>
+            <uib-tab index="category" ng-repeat="category in product" heading="{{category.category}}">
+                <table class="table" style="border-top: 15px">
+                    <tbody>
+                        <tr ng-repeat="item in category.info">
+                            <th>{{item.key}}</th>
+                            <td>{{item.value}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>

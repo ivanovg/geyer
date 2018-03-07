@@ -1,0 +1,395 @@
+{
+  "maker" : [
+    {
+      "name" : "Zeiss",
+      "products" : [
+        {
+          "name" : "Zeiss Markenglas inkl. DuraVision Platinum",
+          "code" : "1234",
+          "models" : [
+            {
+              "brechungsindex" : "1.5",
+              "preis" : [
+                {
+                  "purchase" : "150",
+                  "retail" : "250",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "130",
+                  "retail" : "200",
+                  "time-span" : "01-06-2018 - 14-06-2018"
+                }
+              ]
+            },
+            {
+              "brechungsindex" : "1.6",
+              "preis" : [
+                {
+                  "purchase" : "180",
+                  "retail" : "280",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "150",
+                  "retail" : "230",
+                  "time-span" : "01-06-2018 - 14-06-2018"
+                }
+              ]
+            },
+            {
+              "brechungsindex" : "1.67",
+              "preis" : [
+                {
+                  "purchase" : "250",
+                  "retail" : "350",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "220",
+                  "retail" : "300",
+                  "time-span" : "01-06-2018 - 14-06-2018"
+                }
+              ]
+            },
+            {
+              "brechungsindex" : "1.74",
+              "preis" : [
+                {
+                  "purchase" : "400",
+                  "retail" : "550",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "350",
+                  "retail" : "500",
+                  "time-span" : "01-06-2018 - 14-06-2018"
+                }
+              ]
+            },
+          ]
+        },
+        {
+          "name" : "Zeiss Markenglas inkl. LotuTec",
+          "code" : "1235",
+          "models" : [
+            {
+              "brechungsindex" : "1.5",
+              "preis" : [
+                {
+                  "purchase" : "100",
+                  "retail" : "170",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "80",
+                  "retail" : "140",
+                  "time-span" : "01-08-2018 - 31-08-2018"
+                }
+              ]
+            },
+            {
+              "brechungsindex" : "1.6",
+              "preis" : [
+                {
+                  "purchase" : "150",
+                  "retail" : "280",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "120",
+                  "retail" : "230",
+                  "time-span" : "01-08-2018 - 31-08-2018"
+                }
+              ]
+            },
+            {
+              "brechungsindex" : "1.67",
+              "preis" : [
+                {
+                  "purchase" : "250",
+                  "retail" : "350",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "220",
+                  "retail" : "300",
+                  "time-span" : "01-08-2018 - 31-08-2018"
+                }
+              ]
+            },
+            {
+              "brechungsindex" : "1.74",
+              "preis" : [
+                {
+                  "purchase" : "450",
+                  "retail" : "550",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "420",
+                  "retail" : "500",
+                  "time-span" : "01-08-2018 - 31-08-2018"
+                }
+              ]
+            },
+          ]
+        },
+        {
+          "name" : "Zeiss Markenglas inkl. HMC+",
+          "code" : "1236",
+          "models" : [
+            {
+              "brechungsindex" : "1.5",
+              "preis" : [
+                {
+                  "purchase" : "50",
+                  "retail" : "100",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "40",
+                  "retail" : "80",
+                  "time-span" : "01-04-2018 - 21-04-2018"
+                }
+              ]
+            },
+            {
+              "brechungsindex" : "1.6",
+              "preis" : [
+                {
+                  "purchase" : "60",
+                  "retail" : "120",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "50",
+                  "retail" : "100",
+                  "time-span" : "01-06-2018 - 21-04-2018"
+                }
+              ]
+            },
+            {
+              "brechungsindex" : "1.67",
+              "preis" : [
+                {
+                  "purchase" : "120",
+                  "retail" : "200",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "100",
+                  "retail" : "170",
+                  "time-span" : "01-06-2018 - 21-04-2018"
+                }
+              ]
+            },
+            {
+              "brechungsindex" : "1.74",
+              "preis" : [
+                {
+                  "purchase" : "200",
+                  "retail" : "300",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "170",
+                  "retail" : "250",
+                  "time-span" : "01-06-2018 - 21-04-2018"
+                }
+              ]
+            },
+          ]
+        }
+      ]
+    } ,
+    {
+      "name" : "Seiko",
+      "products" : [
+        {
+          "name" : "Seiko Platinum",
+          "code" : "2345",
+          "models" : [
+            {
+              "brechungsindex" : "1.5",
+              "preis" : [
+                {
+                  "purchase" : "100",
+                  "retail" : "220",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "130",
+                  "retail" : "200",
+                  "time-span" : "01-07-2018 - 14-07-2018"
+                }
+              ]
+            },
+            {
+              "brechungsindex" : "1.6",
+              "preis" : [
+                {
+                  "purchase" : "140",
+                  "retail" : "250",
+                  "time-span" : ""
+                }
+              ]
+            },
+            {
+              "brechungsindex" : "1.67",
+              "preis" : [
+                {
+                  "purchase" : "200",
+                  "retail" : "300",
+                  "time-span" : ""
+                }
+              ]
+            },
+            {
+              "brechungsindex" : "1.74",
+              "preis" : [
+                {
+                  "purchase" : "300",
+                  "retail" : "450",
+                  "time-span" : ""
+                }
+              ]
+            },
+          ]
+        },
+        {
+          "name" : "Seiko Gold",
+          "code" : "2346",
+          "models" : [
+            {
+              "brechungsindex" : "1.5",
+              "preis" : [
+                {
+                  "purchase" : "100",
+                  "retail" : "170",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "80",
+                  "retail" : "140",
+                  "time-span" : "15-08-2018 - 31-08-2018"
+                }
+              ]
+            },
+            {
+              "brechungsindex" : "1.6",
+              "preis" : [
+                {
+                  "purchase" : "150",
+                  "retail" : "280",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "120",
+                  "retail" : "230",
+                  "time-span" : "15-08-2018 - 31-08-2018"
+                }
+              ]
+            },
+            {
+              "brechungsindex" : "1.67",
+              "preis" : [
+                {
+                  "purchase" : "250",
+                  "retail" : "350",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "220",
+                  "retail" : "300",
+                  "time-span" : "15-08-2018 - 31-08-2018"
+                }
+              ]
+            },
+            {
+              "brechungsindex" : "1.74",
+              "preis" : [
+                {
+                  "purchase" : "450",
+                  "retail" : "550",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "420",
+                  "retail" : "500",
+                  "time-span" : "15-08-2018 - 31-08-2018"
+                }
+              ]
+            },
+          ]
+        },
+        {
+          "name" : "Zeiss Silver",
+          "code" : "2347",
+          "models" : [
+            {
+              "brechungsindex" : "1.5",
+              "preis" : [
+                {
+                  "purchase" : "60",
+                  "retail" : "120",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "50",
+                  "retail" : "100",
+                  "time-span" : "01-05-2018 - 21-05-2018"
+                }
+              ]
+            },
+            {
+              "brechungsindex" : "1.6",
+              "preis" : [
+                {
+                  "purchase" : "80",
+                  "retail" : "150",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "60",
+                  "retail" : "110",
+                  "time-span" : "01-05-2018 - 21-05-2018"
+                }
+              ]
+            },
+            {
+              "brechungsindex" : "1.67",
+              "preis" : [
+                {
+                  "purchase" : "110",
+                  "retail" : "180",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "90",
+                  "retail" : "160",
+                  "time-span" : "01-05-2018 - 21-05-2018"
+                }
+              ]
+            },
+            {
+              "brechungsindex" : "1.74",
+              "preis" : [
+                {
+                  "purchase" : "180",
+                  "retail" : "290",
+                  "time-span" : ""
+                },
+                {
+                  "purchase" : "150",
+                  "retail" : "220",
+                  "time-span" : "01-05-2018 - 21-05-2018"
+                }
+              ]
+            },
+          ]
+        }
+      ]
+    }
+  ]
+}

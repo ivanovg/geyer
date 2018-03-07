@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html data-ng-app="augenglueckApp">
+
+<head>
+	<title>augenglück</title>
+	<meta charset="UTF-8">
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" /> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="white" />
+	<meta name="apple-mobile-web-app-title" content="Augenglück" />
+	<script src="js/jquery/jquery-3.3.1.min.js"></script>
+	<script src="../../js/backend.js"></script>
+	<script src="../../js/client.js"></script>
+	<script src="../../js/calculatePrice.js"></script>
+	<script src="../../js/tableRenderer.js"></script>
+	<script src="tm/Chart.min.js"></script>
+
+	
+	<link rel="stylesheet" href="tm/augenglueck.css" />
+	<link rel="stylesheet" href="tm/tables.css" />
+	<link rel="stylesheet" href="tm/font-awesome/css/font-awesome.min.css" />
+	<link rel="apple-touch-icon" href="tm/augenglueck.logo.png" />
+	<link rel="apple-touch-startup-image" href="tm/augenglueck.logo.png" />
+	<script src="js/augenglueck.js"></script>
+
+	<link rel="stylesheet" href="tm/matrixCompare.css" />
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="js/matrixCompare.js"></script>
+	<script src="js/angular/angular.min.js"></script>
+	<script src="js/angular/angular-route.min.js"></script>
+	<script src="js/angular/angular-touch.min.js"></script>
+	<script src="js/angular/angular-animate.min.js"></script>
+
+	<script src="js/angular/ui-bootstrap-tpls-2.5.0.min.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/app_routes.js"></script>
+	<script src="js/controller/homeController.js"></script>
+	<script src="js/controller/fieldOfUseController.js"></script>
+	<script src="js/controller/visualAreasController.js"></script>
+	<script src="js/controller/matrixComparisonController.js"></script>
+	<script src="js/controller/calculationIndexController.js"></script>
+	<script src="js/controller/coatingController.js"></script>
+	<script src="js/controller/priceSelectionController.js"></script>
+	<script src="js/controller/orderOptionsController.js"></script>
+	<script src="js/controller/customerInputController.js"></script>
+	<script src="js/controller/orderOverviewController.js"></script>
+	<script src="js/controller/adminController.js"></script>
+	<script src="js/controller/customerAdministrationController.js"></script>
+	<script src="js/controller/adminCustomerModalController.js"></script>
+	<script src="js/controller/pricingTableAdministrationController.js"></script>
+	<script src="js/controller/customerEyeCalculationController.js"></script>
+	<script src="js/controller/mdrVideoController.js"></script>
+	<script src="js/controller/adminStatisticsController.js"></script>
+	<script src="js/controller/adminAuctionEmailModalController.js"></script>
+	<script src="js/controller/productInformationModalController.js"></script>
+	<style>
+		#warning-message {
+			display: none;
+		}
+
+		@media only screen and (orientation:portrait) {
+			#wrapper {
+				/* transform: rotate(90deg) translate(50px, 150px);
+				width: 100vh;
+				height: 100vw; */
+				display: none;
+			}
+			#warning-message {
+				display: block;
+				position: fixed;
+				top: 39vh;
+				margin: 50px;
+				text-align: center;
+			}
+		}
+
+		@media only screen and (orientation:landscape) {
+			#warning-message {
+				display: none;
+			}
+		}
+
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+
+		li {
+			float: left;
+			margin: 5px;
+		}
+
+		li a {
+			display: block;
+			color: black !important;
+			text-align: center;
+			padding: 10px 12px;
+			text-decoration: none !important;
+		}
+
+		li a.button {
+			background-color: #e46c0b;
+			color: white !important;
+			font-weight: bold;
+		}
+
+		a.cartbutton {
+			display: block;
+			position: fixed;
+			text-align: center;
+			margin-top: 5px;
+			margin-bottom: -5px;
+			padding: 2px 14px;
+			text-decoration: none !important;
+			background-color: #e46c0b;
+			color: white !important;
+			font-weight: bold;
+		}
+
+		.table table.prices tr.rowSelected td.colSelected a.cartbutton,
+		.table table.prices tr td.selected a.cartbutton {
+			position: relative !important;
+		}
+
+		li:last-child.isSelected a.button {
+			background-color: #ca5400;
+			border-bottom: 0px !important;
+		}
+
+		li.isSelected a {
+			border-bottom: solid 1px gray;
+		}
+
+		.maxNavBarSize {
+			position: fixed !important;
+			background-color: white;
+			z-index: 500;
+			width: calc(100%-4em);
+			margin-left: 0;
+			margin-right: 0;
+			margin-top: 0;
+			top: 0;
+			left: 0;
+			right: 0 !important;
+			padding-left: 2em;
+			padding-top: 2em;
+			padding-right: 2em;
+			border-bottom: 1px solid gray !important;
+			border-radius: 0 !important;
+			width: 100vw;
+		}
+
+		.not-active {
+			pointer-events: none;
+			cursor: default;
+		}
+
+		[hidden] {
+			display: none !important;
+		}
+
+		/* Style the checkboxes */
+
+		.checkbox-primary input[type="checkbox"]:checked+label::before {
+			background-color: #e46c0b;
+			border-color: #da9109;
+		}
+
+		.checkbox-primary input[type="checkbox"]:disabled:checked+label::before{
+			background:#CCCCCC;
+			border-color: #CCCCCC;
+		}
+		.checkbox input[type="checkbox"]:disabled:label::before{
+			background:#CCCCCC;
+			border-color: #CCCCCC;
+		}
+
+		.checkbox-primary input[type="checkbox"]:checked+label::after {
+			color: #fff;
+		}
+
+		.checkbox {
+			padding-left: 20px;
+			margin-top: 4px !important;
+			margin-bottom: 4px !important;
+		}
+
+		.checkbox label {
+			display: inline-block;
+			position: relative;
+			padding-left: 5px;
+		}
+
+		.checkbox label::before {
+			content: "";
+			display: inline-block;
+			position: absolute;
+			width: 15px;
+			height: 15px;
+			left: 0;
+			margin-left: -20px;
+			margin-right: 20px;
+			border: 1px solid #CCCCCC;
+			border-radius: 3px;
+			background-color: #fff;
+			-webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+			-o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+			transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+		}
+
+		.checkbox label::after {
+			display: inline-block;
+			position: absolute;
+			width: 14px;
+			height: 14px;
+			left: 0;
+			top: 0;
+			padding-left: 1px;
+			padding-top: 1.5px;
+			margin-left: -20px;
+			font-size: 12px;
+			color: #555555;
+		}
+
+		.checkbox input[type="checkbox"] {
+			opacity: 0;
+		}
+
+		.checkbox input[type="checkbox"]:checked+label::after {
+			font-family: 'FontAwesome';
+			line-height: 11px;
+			content: "\f00c";
+		}
+
+		.checkbox-lg label::before {
+			content: "";
+			display: inline-block;
+			position: absolute;
+			width: 22px;
+			height: 22px;
+			left: 0;
+			margin-left: -20px;
+			margin-right: 20px;
+			border: 1px solid #CCCCCC;
+			border-radius: 3px;
+			-webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+			-o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+			transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+		}
+
+		.checkbox-lg label::after {
+			display: inline-block;
+			position: absolute;
+			width: 21px;
+			height: 21px;
+			left: 0;
+			top: 0;
+			padding-left: 1px;
+			padding-top: 5px;
+			margin-left: -20px;
+			font-size: 21px;
+			color: #555555;
+		}
+
+		.page {
+			padding-top: 0;
+			position: absolute;
+			width: 93vw;
+			padding-bottom: 32px;
+			background-color: white;
+		}
+
+		@keyframes slideFromRight {
+			0% {
+				transform: translateX(100%);
+			}
+
+			100% {
+				transform: translateX(0);
+			}
+		}
+
+		@keyframes slideFromLeft {
+			0% {
+				transform: translateX(-100%);
+			}
+
+			100% {
+				transform: translateX(0);
+			}
+		}
+
+		@-webkit-keyframes slideFromRight {
+			0% {
+				-webkit-transform: translateX(100%);
+			}
+
+			100% {
+				-webkit-transform: translateX(0);
+			}
+		}
+
+		@-webkit-keyframes slideFromLeft {
+			0% {
+				-webkit-transform: translateX(-100%);
+			}
+
+			100% {
+				-webkit-transform: translateX(0);
+			}
+		}
+
+		/* When the page enters, slide it from the right */
+
+		.leftSwipe.ng-enter {
+			animation-duration: 0.30s;
+			animation-timing-function: ease-in-out;
+			-webkit-animation-duration: 0.30s;
+			-webkit-animation-timing-function: ease-in-out;
+			animation-name: slideFromRight;
+			-webkit-animation-name: slideFromRight;
+		}
+
+		/* When the page enters and moveToLeft is true, slide it from the left(out of the user view) to the right (left corner) */
+
+		.rightSwipe.ng-enter {
+			animation-duration: 0.30s;
+			animation-timing-function: ease-in-out;
+			-webkit-animation-duration: 0.30s;
+			-webkit-animation-timing-function: ease-in-out;
+			animation-name: slideFromLeft;
+			-webkit-animation-name: slideFromLeft;
+		}
+
+		/* When the page leaves, slide it to left(out of the user view) from the left corner,
+    	in other words slide it from the left(out of the view) to the left corner but in reverse order */
+
+		.leftSwipe.ng-leave {
+			animation-duration: 0.30s;
+			animation-timing-function: ease-in-out;
+			-webkit-animation-duration: 0.30s;
+			-webkit-animation-timing-function: ease-in-out;
+			animation-name: slideFromLeft;
+			animation-direction: reverse;
+			-webkit-animation-name: slideFromLeft;
+			-webkit-animation-direction: reverse;
+		}
+
+		/* When the page leaves, slide it to the right(out of the user view) from the the left corner,
+    	in other words, slide it from the right but in reverse order  */
+
+		.rightSwipe.ng-leave {
+			animation-duration: 0.30s;
+			animation-timing-function: ease-in-out;
+			-webkit-animation-duration: 0.30s;
+			-webkit-animation-timing-function: ease-in-out;
+			animation-name: slideFromRight;
+			animation-direction: reverse;
+			-webkit-animation-name: slideFromRight;
+			-webkit-animation-direction: reverse;
+		}
+
+		.brightness{
+			filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'brightness\'><feColorMatrix type=\'matrix\' values=\'1.2 0 0 0 0 0 1.2 0 0 0 0 0 1.2 0 0 0 0 0 1.2 0\'/></filter></svg>#brightness"); /* Firefox 3.5+ */
+			-webkit-filter:brightness(100%); /* Chrome 19+ & Safari 6+ */
+		}
+
+		.no-brightness{
+			filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'brightness\'><feColorMatrix type=\'matrix\' values=\'1.2 0 0 0 0 0 1.2 0 0 0 0 0 1.2 0 0 0 0 0 1.2 0\'/></filter></svg>#brightness"); /* Firefox 3.5+ */
+			-webkit-filter:brightness(40%); /* Chrome 19+ & Safari 6+ */
+		}
+
+		.buy-me{
+			border-width: 9px !important;
+			border-color: orange !important;
+			border-style: dashed !important;
+		}
+
+		.buy-me-price{
+			color: orange;
+			font-size: 32px;
+		}
+
+		.modal-size {
+		    height: 700px;
+		}
+	</style>
+	<script>
+		app.controller('NavCtrl',
+			['$scope', '$location', '$route', '$window', '$timeout', '$rootScope', function ($scope, $location, $route, $window, $timeout, $rootScope) {
+				$rootScope.videoPlaying = false;
+				var HomePages = ['home'];
+				var CustomerEyePage = ['customerEyeCalculation'];
+				var InformationsPages = ['fieldOfUse', 'visualAreas', 'matrixComparison', 'calculationIndex', 'coating', 'mdrVideo', 'priceSelection'];
+				var BuyingProcessPages = ['orderOptions', 'enterCustomerInformation', 'orderOverview'];
+				var AdminPages = ['admin', 'pricingTableAdministration', 'customerAdministration', 'statisticsAdministration'];
+				$scope.currentState = -1;
+				$scope.pageStates = {
+					HomePages: 0,
+					CustomerEyePage: 1,
+					Informations: 2,
+					BuyingProcess: 3,
+					Admin: 4
+				};
+
+				$scope.navClass = function (page) {
+					var currentRoute = $location.path().substring(1) || 'home';
+					return page === currentRoute ? 'isSelected' : '';
+				};
+
+				$scope.loadPage = function (pageUrl) {
+					var currentRoute = $location.path().substring(1) || 'home';
+					var index = 0;
+					var newIndex = 0;
+					switch ($scope.currentState) {
+						case 0: index = HomePages.indexOf(currentRoute); break;
+						case 1: index = CustomerEyePage.indexOf(currentRoute); break;
+						case 2: index = InformationsPages.indexOf(currentRoute); break;
+						case 3: index = BuyingProcessPages.indexOf(currentRoute); break;
+						case 4: index = AdminPages.indexOf(currentRoute);
+					}
+					newIndex = HomePages.indexOf(pageUrl) !== -1 ? HomePages.indexOf(pageUrl) :
+						(CustomerEyePage.indexOf(pageUrl) !== -1 ? CustomerEyePage.indexOf(pageUrl) :
+							(InformationsPages.indexOf(pageUrl) !== -1 ? InformationsPages.indexOf(pageUrl) :
+								(BuyingProcessPages.indexOf(pageUrl) !== -1 ? BuyingProcessPages.indexOf(pageUrl) :
+									(AdminPages.indexOf(pageUrl) !== -1 ? AdminPages.indexOf(pageUrl) : 0))));
+					if (newIndex > index) {
+						$scope.nextStep(pageUrl);
+					}
+					else if (newIndex < index) {
+						$scope.previousStep(pageUrl);
+					}
+					else {
+						$location.url('/' + pageUrl);
+					}
+				};
+
+				$scope.$on('$routeChangeSuccess', function (event, next, current) {
+					if (next !== current) {
+						$timeout(function () {
+							var pageUrl = $location.path().substring(1) || 'home';
+							$scope.setCurrentState(pageUrl);
+						});
+					}
+				});
+
+				$scope.setCurrentState = function (pageUrl) {
+					var oldVal = angular.copy($scope.currentState);
+					if (HomePages.indexOf(pageUrl) !== -1) {
+						$scope.currentState = $scope.pageStates.HomePages;
+					}
+					else if (CustomerEyePage.indexOf(pageUrl) !== -1) {
+						$scope.currentState = $scope.pageStates.CustomerEyePage;
+					}
+					else if (InformationsPages.indexOf(pageUrl) !== -1) {
+						$scope.currentState = $scope.pageStates.Informations;
+					}
+					else if (BuyingProcessPages.indexOf(pageUrl) !== -1) {
+						$scope.currentState = $scope.pageStates.BuyingProcess;
+					} else if (AdminPages.indexOf(pageUrl) !== -1) {
+						$scope.currentState = $scope.pageStates.Admin;
+					}
+				}
+
+				$scope.cancel = function () {
+					$scope.loadPage('home');
+					$scope.currentState = $scope.pageStates.HomePages;
+					selectedRow = -1;
+					selectedCol = -1;
+					selectedTableId = -1;
+					selectedExtras = [];
+				}
+
+				$scope.close = function () {
+					$scope.loadPage('home');
+					$scope.currentState = $scope.pageStates.HomePages;
+					selectedRow = -1;
+					selectedCol = -1;
+					selectedTableId = -1;
+					selectedExtras = [];
+				}
+
+				$scope.nextStep = function (page) {
+					console.log(page);
+					$scope.pageClass = "leftSwipe";
+					var element = angular.element(document.getElementsByClassName("rightSwipe"));
+					element.removeClass('rightSwipe');
+					element.addClass('leftSwipe');
+					$location.path(page);
+				}
+				$scope.previousStep = function (page) {
+					$scope.pageClass = "rightSwipe";
+					var element = angular.element(document.getElementsByClassName("leftSwipe"));
+					element.removeClass('leftSwipe');
+					element.addClass('rightSwipe');
+					$location.path(page);
+				}
+			}]);
+	</script>
+</head>
+
+<body id="body" ng-controller="NavCtrl" class="overflow-x: hidden;">
+	<div id="wrapper">
+		<div class="container">
+			<div ng-show="currentState === pageStates.HomePages" class="maxNavBarSize" style="height:6.5em">
+				<ul id="homeNavList">
+					<li ng-class="navClass('admin')" class="pull-right">
+						<a class="button" href='' ng-click="loadPage('admin')">
+							<i class="fa fa-cog" aria-hidden="true"></i>
+						</a>
+					</li>
+					<li class="pull-right">
+						<div class="augenglueck_logo">
+							<img src="tm/augenglueck.logo.svg" alt="augenglück">
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div ng-show="currentState === pageStates.CustomerEyePage" class="maxNavBarSize" style="height:6.5em">
+				<ul id="customerEyeNavList">
+					<li ng-class="navClass('admin')" class="pull-right">
+						<a class="button" href='' ng-click="loadPage('home')">
+							<i class="fa fa-home" aria-hidden="true"></i>
+						</a>
+					</li>
+					<li class="pull-right">
+						<div class="augenglueck_logo">
+							<img src="tm/augenglueck.logo.svg" alt="augenglück">
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div ng-show="currentState === pageStates.Informations" class="maxNavBarSize" style="height:6.5em">
+				<ul id="informationNavList">
+				    <li>
+                        <a class="button" href='javascript: history.go(-1)'">
+                            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                        </a>
+                    </li>
+					<li ng-class="navClass('fieldOfUse')">
+						<a href='' ng-click="loadPage('fieldOfUse')">Gleitsicht/Arbeit</a>
+					</li>
+					<li ng-class="navClass('visualAreas')">
+						<a href='' ng-click="loadPage('visualAreas')">Sehbereiche</a>
+					</li>
+					<li ng-class="navClass('matrixComparison')">
+						<a href='' ng-click="loadPage('matrixComparison')">Matrix-Vergleich</a>
+					</li>
+					<li ng-class="navClass('calculationIndex')">
+						<a href='' ng-click="loadPage('calculationIndex')">Brechnungsindex</a>
+					</li>
+					<li ng-class="navClass('coating')">
+						<a href='' ng-click="loadPage('coating')">Beschichtungen</a>
+					</li>
+					<li ng-class="navClass('mdrVideo')">
+						<a href='' ng-click="loadPage('mdrVideo')">MDR-Video</a>
+					</li>
+					<li ng-class="navClass('priceSelection')" style="margin: 3px;">
+                        <a class="button" href='' ng-click="loadPage('priceSelection')">Preistabellen</a>
+                    </li>
+					<li ng-class="navClass('home')" class="pull-right" style="margin: 3px;">
+                        <a class="button" href='' ng-click="loadPage('home')">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                        </a>
+                    </li>
+				</ul>
+			</div>
+			<div ng-show="currentState === pageStates.BuyingProcess" class="maxNavBarSize no-print" style="height:6.5em">
+				<ul id="orderNavList">
+				    <li>
+                        <a class="button" href='javascript: history.go(-1)'">
+                            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                        </a>
+                    </li>
+					<li ng-class="navClass('orderOptions')">
+						<a class="not-active" href=''>Zusatz-Optionen</a>
+					</li>
+					<li ng-class="navClass('enterCustomerInformation')">
+						<a class="not-active" href=''>Kunden-Informationen</a>
+					</li>
+					<li ng-class="navClass('orderOverview')">
+						<a class="not-active" href=''>Zusammenfassung</a>
+					</li>
+					<li class="pull-right">
+						<div class="augenglueck_logo">
+							<img src="tm/augenglueck.logo.svg" alt="augenglück">
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div ng-show="currentState === pageStates.Admin" class="maxNavBarSize" style="height:6.5em">
+				<ul id="adminNavList">
+					<li ng-class="navClass('admin')">
+						<a ng-click="loadPage('admin')" href=''>Administration</a>
+					</li>
+					<li ng-class="navClass('pricingTableAdministration')">
+						<a ng-click="loadPage('pricingTableAdministration')" href=''>Preislisten Verwaltung</a>
+					</li>
+					<li ng-class="navClass('customerAdministration')">
+						<a ng-click="loadPage('customerAdministration')" href=''>Kunden Verwaltung</a>
+					</li>
+					<li ng-class="navClass('statisticsAdministration')">
+							<a ng-click="loadPage('statisticsAdministration')" href=''>Statistiken</a>
+						</li>
+					<li ng-class="navClass('home')" class="pull-right">
+						<a class="button" href='' ng-click="loadPage('home')">
+							<i class="fa fa-home" aria-hidden="true"></i>
+						</a>
+					</li>
+					<li class="pull-right">
+						<div class="augenglueck_logo">
+							<img src="tm/augenglueck.logo.svg" alt="augenglück">
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="no-print" ng-show="currentState === pageStates.CustomerEyePage" style="margin-top:5em"></div>
+			<div class="no-print" ng-show="currentState === pageStates.HomePages" style="margin-top:5em"></div>			
+			<div class="no-print" ng-show="currentState === pageStates.Informations" style="margin-top:5em"></div>
+			<div class="no-print" ng-show="currentState === pageStates.BuyingProcess" style="margin-top:5em"></div>
+			<div class="no-print" ng-show="currentState === pageStates.Admin" style="margin-top:5em"></div>
+		</div>
+		<div>
+			<div id="mainPage" data-ng-view="" class="page {{ pageClass }}"></div>
+		</div>
+	</div>
+	<div id="warning-message">
+		<h1 style="text-align:center">
+			<bdi style="color:#737d83">
+				<i class="fa fa-refresh" aria-hidden="true"></i> Please rotate to</bdi> landscape</h1>
+	</div>
+	<div style="position: absolute; top:0; bottom:0; right:0; left:0; z-index:1000; background-color:gray; opacity:0.8;" ng-show="videoPlaying" ng-click="videoControl()"></div>
+</body>
+
+</html>

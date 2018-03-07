@@ -1,0 +1,396 @@
+<style>
+    .thin {
+        width: 2%;
+    }
+    .wide {
+        width: 16%;
+    }
+    .nav.nav-tabs {
+        border-bottom: 1px solid #e46c0b;
+    }
+    .nav-item.active {
+        background: #e46c0b;
+        color: white;
+    }
+    .nav-item {
+        margin-bottom: 0;
+    }
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+        background: #e46c0b;
+        color: white !important;
+        border: none;
+    }
+    .white {
+        color: white;
+    }
+</style>
+<div class="modal-content modal-size">
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-sm-8">
+                <h3 class="modal-title" id="modal-title">{{ formData.firstName }} {{ formData.lastName }}</h3>
+            </div>
+            <div class="col-sm-4">
+                <button type="button" style="border: none" class="btn btn-default pull-right" ng-click="close()"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <uib-tabset active="active">
+            <uib-tab index="0" heading="Kunden Informationen">
+                <br/>
+                <form id="customerInformationForm" name="customerInformationForm">
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label for="firstName">Vorname</label>
+                            <input type="text" ng-disabled="!editCustomerData" class="form-control" id="firstName" placeholder="Max" ng-model="formData.firstName"
+                                ng-required="true">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="lastName">Nachname</label>
+                            <input type="text" ng-disabled="!editCustomerData" class="form-control" id="lastName" placeholder="Mustermann" ng-model="formData.lastName"
+                                ng-required="true">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-10">
+                            <label for="street">Straße</label>
+                            <input type="text" ng-disabled="!editCustomerData" class="form-control" id="street" placeholder="Musterstraße" ng-model="formData.street"
+                                ng-required="true">
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="houseNumber">Hausnummer</label>
+                            <input type="text" ng-disabled="!editCustomerData" class="form-control" id="houseNumber" placeholder="541" ng-model="formData.houseNumber"
+                                ng-required="true">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group  col-sm-4">
+                            <label for="postcode">Postleitzahl</label>
+                            <input type="text" ng-disabled="!editCustomerData" class="form-control" id="postcode" placeholder="12345" ng-model="formData.postcode"
+                                ng-required="true">
+                        </div>
+                        <div class="form-group col-sm-8">
+                            <label for="city">Stadt</label>
+                            <input type="text" ng-disabled="!editCustomerData" class="form-control" id="city" placeholder="Musterhausen" ng-model="formData.city"
+                                ng-required="true">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <label for="email">Email</label>
+                            <input type="text" ng-disabled="!editCustomerData" class="form-control" id="email" placeholder="Max.Mustermann@example.com"
+                                ng-model="formData.email" ng-required="true">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Aktionen / Mails / Werbung</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="checkbox checkbox-primary">
+                                <input id="invitations" ng-disabled="!editCustomerData" type="checkbox">
+                                <label for="invitations">Einladungen (Events)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="checkbox checkbox-primary">
+                                <input id="informations" checked="true" ng-disabled="!editCustomerData" type="checkbox">
+                                <label for="informations">Informationen (Brille fertig etc.)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="checkbox checkbox-primary">
+                                <input id="events" ng-disabled="!editCustomerData" type="checkbox">
+                                <label for="events">Aktionen</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <br/>
+                    <div ng-show="editCustomerData">
+                        <button style="width:110px" type="button" class="btn btn-default" ng-click="cancelEdit()">Abbrechen</button>
+                        <button style="width:110px" type="submit" class="btn btn-primary" ng-disabled="customerInformationForm.$invalid" ng-click="saveCustomerData()">Speichern</button>
+
+                    </div>
+                    <div ng-hide="editCustomerData">
+                        <button style="width:110px" type="submit" class="btn btn-primary" ng-click="editCustomer()">Bearbeiten</button>
+                    </div>
+                </form>
+            </uib-tab>
+            <uib-tab index="1" heading="Merkmale">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>Stärken</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered" id="customer-data">
+                            <thead>
+                            <tr>
+                                <th class="thin white">R</th>
+                                <th class="thin white">aaaaa</th>
+                                <th class="text-center wide">Sph.</th>
+                                <th class="text-center wide">Cyl.</th>
+                                <th class="text-center wide">Achse</th>
+                                <th class="text-center wide">Add.</th>
+                                <th class="text-center wide">VCC</th>
+                                <th class="text-center wide">VCC Binokular</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="thin" style="padding-top: 14px;">
+                                    <b>R</b>
+                                </td>
+                                <td style="padding-top: 14px;">
+                                    <select ng-disabled="!editCustomerData">
+                                        <option value="F">F</option>
+                                        <option value="N">N</option>
+                                    </select>
+                                </td>
+                                <td class="wide">
+                                    <input type="number" ng-disabled="!editCustomerData" class="form-control text-center" ng-model="refraction[0].sph" step="0.25" />
+                                </td>
+                                <td class="wide">
+                                    <input type="number" ng-disabled="!editCustomerData" class="form-control text-center" ng-model="refraction[0].cyl" step="0.25" />
+                                </td>
+                                <td class="wide">
+                                    <input type="number" ng-disabled="!editCustomerData" class="form-control text-center" ng-model="refraction[0].achse" step="1" />
+                                </td>
+                                <td class="wide">
+                                    <input type="number" ng-disabled="!editCustomerData" class="form-control text-center" ng-model="refraction[0].add" step="0.1" />
+                                </td>
+                                <td class="wide">
+                                    <input type="number" ng-disabled="!editCustomerData" class="form-control text-center" ng-model="refraction[0].vcc" step="0.1" />
+                                </td>
+                                <td class="wide">
+                                    <input type="number" ng-disabled="!editCustomerData" class="form-control text-center" ng-model="refraction[0].vcc_binokular" step="0.1" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="thin" style="padding-top: 14px;">
+                                    <b>L</b>
+                                </td>
+                                <td style="padding-top: 14px;">
+                                    <select ng-disabled="!editCustomerData">
+                                        <option value="F">F</option>
+                                        <option value="N">N</option>
+                                    </select>
+                                </td>
+                                <td class="wide">
+                                    <input type="number" ng-disabled="!editCustomerData" class="form-control text-center" ng-model="refraction[1].sph" step="0.25" />
+                                </td>
+                                <td class="wide">
+                                    <input type="number" ng-disabled="!editCustomerData" class="form-control text-center" ng-model="refraction[1].cyl" step="0.25" />
+                                </td>
+                                <td class="wide">
+                                    <input type="number" ng-disabled="!editCustomerData" class="form-control text-center" ng-model="refraction[1].achse" step="1" />
+                                </td>
+                                <td class="wide">
+                                    <input type="number" ng-disabled="!editCustomerData" class="form-control text-center" ng-model="refraction[1].add" step="0.1" />
+                                </td>
+                                <td class="wide">
+                                    <input type="number" ng-disabled="!editCustomerData" class="form-control text-center" ng-model="refraction[1].vcc" step="0.1" />
+                                </td>
+                                <td class="wide">
+                                    <input type="number" ng-disabled="!editCustomerData" class="form-control text-center" ng-model="refraction[1].vcc_binokular" step="0.1" />
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br/>
+                <div ng-show="editCustomerData">
+                    <button style="width:110px" type="button" class="btn btn-default" ng-click="cancelEdit()">Abbrechen</button>
+                    <button style="width:110px" type="submit" class="btn btn-primary" ng-disabled="customerInformationForm.$invalid" ng-click="saveCustomerData()">Speichern</button>
+
+                </div>
+                <div ng-hide="editCustomerData">
+                    <button style="width:110px" type="submit" class="btn btn-primary" ng-click="editCustomer()">Bearbeiten</button>
+                </div>
+            </uib-tab>
+            <uib-tab index="2" heading="Bestellungen">
+                <br/>                    
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td class="col-sm-2">Bestellt am / Erhalten am</td>
+                            <td class="col-sm-10">Bestellung</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="col-sm-2">22.06.2017 / {{exampleDeliveredText}} <button class="btn btn-primary" ng-click="setExampleText()" ng-show="exampleDeliveredText == 'Offen'">Abgeholt</button></td>
+                            <td class="col-sm-10">
+                                <!-- Here the Calculation will be injected by augenglueck.js -->
+                                <div class="calculation col-xs-12" style="display: block;">
+                                    <table class="table col-xs-12">
+                                        <tbody>
+                                            <tr>
+                                                <th>Gleitsicht</th>
+                                                <td>G6 Brechungsindex 1,74</td>
+                                                <td class="calculate_price">
+                                                    <strike>UVP 1240,-&nbsp;€</strike><br>999,-&nbsp;€</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Antistatic</th>
+                                                <td></td>
+                                                <td class="calculate_price">+&nbsp;24,-&nbsp;€</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Phototrop</th>
+                                                <td></td>
+                                                <td class="calculate_price">+&nbsp;144,-&nbsp;€</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Fassung</th>
+                                                <td>Ray Ban</td>
+                                                <td class="calculate_price">+&nbsp;89,-&nbsp;€</td>
+                                            </tr>
+                                            <tr class="calculate_final">
+                                                <th>Gesamt</th>
+                                                <td></td>
+                                                <td class="calculate_price">1256,-&nbsp;€</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-sm-2">01.05.2017 / 14.05.2017</td>
+                            <td class="col-sm-10">
+                                <!-- Here the Calculation will be injected by augenglueck.js -->
+                                <div class="calculation  col-xs-12" style="display: block;">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th>Gleitsicht</th>
+                                                <td>G2 Brechungsindex 1,50</td>
+                                                <td class="calculate_price">
+                                                    <strike>UVP 470,-&nbsp;€</strike><br>429,-&nbsp;€</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Prisma</th>
+                                                <td></td>
+                                                <td class="calculate_price">+&nbsp;96,-&nbsp;€</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Polarisierend</th>
+                                                <td></td>
+                                                <td class="calculate_price">+&nbsp;144,-&nbsp;€</td>
+                                            </tr>
+                                            <tr>
+                                                <th>cyl &gt; 2,0 dpt</th>
+                                                <td></td>
+                                                <td class="calculate_price">+&nbsp;48,-&nbsp;€</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Fassung</th>
+                                                <td>Gucci</td>
+                                                <td class="calculate_price">+&nbsp;134,-&nbsp;€</td>
+                                            </tr>
+                                            <tr class="calculate_final">
+                                                <th>Gesamt</th>
+                                                <td></td>
+                                                <td class="calculate_price">851,-&nbsp;€</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-sm-2">15.05.2015 / 24.05.2015</td>
+                            <td class="col-sm-10">
+                                <!-- Here the Calculation will be injected by augenglueck.js -->
+                                <div class="calculation col-xs-12" style="display: block;">
+                                    <table class="table col-xs-12">
+                                        <tbody>
+                                            <tr>
+                                                <th>Einstärken</th>
+                                                <td>TOP EINSTIEG Brechungsindex 1,50</td>
+                                                <td class="calculate_price">
+                                                    <strike>UVP 173,-&nbsp;€</strike><br>144,-&nbsp;€</td>
+                                            </tr>
+                                            <tr>
+                                                <th>MDR</th>
+                                                <td></td>
+                                                <td class="calculate_price">+&nbsp;72,-&nbsp;€</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Verlaufsfarben</th>
+                                                <td></td>
+                                                <td class="calculate_price">+&nbsp;72,-&nbsp;€</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Sun &amp; Fun kontraststeigernd</th>
+                                                <td></td>
+                                                <td class="calculate_price">+&nbsp;72,-&nbsp;€</td>
+                                            </tr>
+                                            <tr>
+                                                <th>sph &gt; 4,0 dpt</th>
+                                                <td></td>
+                                                <td class="calculate_price">+&nbsp;48,-&nbsp;€</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Lotusbeschichtung</th>
+                                                <td></td>
+                                                <td class="calculate_price">+&nbsp;-30,-&nbsp;€</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Fassung</th>
+                                                <td>Ferrary</td>
+                                                <td class="calculate_price">+&nbsp;22,-&nbsp;€</td>
+                                            </tr>
+                                            <tr class="calculate_final">
+                                                <th>Gesamt</th>
+                                                <td></td>
+                                                <td class="calculate_price">400,-&nbsp;€</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </uib-tab>
+            <uib-tab index="3" heading="Gespeicherte Beratungen">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered" style="margin-top: 20px;">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-2">Datum</th>
+                                    <th class="col-sm-6">Gespeichte Beratung</th>
+                                    <th class="col-sm-2">Beraten von</th>
+                                    <th class="col-sm-2"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="col-sm-2">15.01.2018</td>
+                                    <td class="col-sm-6">G2 Brechungsindex 1,50</td>
+                                    <td class="col-sm-2">Max Mustermann</td>
+                                    <td class="col-sm-2">
+                                        <button type="button" class="btn btn-success" ng-click="goToConsultation()">Zur Beratung</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>

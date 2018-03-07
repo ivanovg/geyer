@@ -1,0 +1,109 @@
+
+.matrixCompare {
+	margin: auto;
+	position: relative;
+	display: block;
+	
+	/*
+	width: 1024px;
+	height: 328px;
+	*/
+	
+	height: 328px;
+	min-height: 328px;
+	
+	overflow: visible;
+}
+
+.comprePreload {
+	display: none;
+	opacity: .001;
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+.compareFront {
+	z-index: 2;
+	position: absolute;
+	width: 100%;
+	top: 0;
+	text-align: center;
+	
+	margin-left: 20px;	/* The images are not perfectly centered! */
+}
+
+.compareMenu {
+	position: absolute;
+	display: table;
+	width: 100%;
+}
+.compareMenuSide {
+	display: table-cell;
+	width: 50%;
+}
+.compareMenu_left {
+	padding-left: 5%;
+}
+.compareMenu_right {
+	padding-right: 5%;
+}
+
+.compareMask {
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	background-image: url('../media/compare_mask001.png');
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-position: center top;
+	border-bottom: 100px solid #ffffff;
+}
+
+.compareBackground {
+	position: absolute;
+	z-index: 0;
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+.compareBackgroundSide {
+	display: table-cell;
+	width: 50%;
+	height: 100%;
+	/*background-image: url('../media/compare_G2.png');*/
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-position: center top;
+	
+	/*transition: background 1s; */
+}
+.compareBackground_left {
+	background-image: url('../media/compare_scene1_g2_left.jpg');
+}
+.compareBackground_right {
+	background-image: url('../media/compare_scene1_g2_right.jpg');
+}
+
+
+.textMenu {
+}
+
+.textMenuItem {
+	display: inline-block;
+	font-family: 'Prima Sans', 'Arial', sans-serif;
+	font-size: 28px;
+	font-weight: normal;
+	color: #737d83;
+	text-decoration: none;
+	margin-left: 8px;
+	margin-right: 8px;
+	transition: all .2s ease-out;
+}
+.textMenuItem.selected {
+	font-size: 40px;
+	color: #000000;
+	font-weight: bold;
+}

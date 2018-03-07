@@ -1,0 +1,126 @@
+<div ng-controller="orderOverviewController" ng-swipe-right="previousStep('enterCustomerInformation')" style="min-height: 80vh;">
+    <form>
+        <div style="width: 300px;" class="print pull-right">
+            <img class="pull-right" src="./tm/augenglueck.logo.svg" alt="augenglück" />
+        </div>
+        <br class="print" />
+        <br class="print" />
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Zusammenfassung</h1>
+            </div>
+        </div>
+        <div class="alert alert-success no-print" style="position:fixed; width:95vw; height:4em; z-index: 500; top: 7em;" ng-hide="!isBought || hideThis">
+            <div class="row">
+                <div class="col-xs-2 col-sm-1"><i class="fa fa-check"></i></div>
+                <div class="col-xs-8 col-sm-10">
+                    <strong style="white-space: pre-line;">Ihre Bestllung wurde erfolgreich im System hinterlegt!</strong>
+                </div>
+                <div class="pull-right" style="padding-right: 15px; cursor: pointer;" ng-click="hideThis = true;"><i class="fa fa-times"></i></div>
+            </div>
+        </div>
+        <div class="alert alert-success no-print" style="position:fixed; width:95vw; height:4em; z-index: 500; top: 7em;" ng-hide="!isSaved || hideThis">
+            <div class="row">
+                <div class="col-xs-2 col-sm-1"><i class="fa fa-check"></i></div>
+                <div class="col-xs-8 col-sm-10">
+                    <strong style="white-space: pre-line;">Die Beratung wurde erfolgreich im System gespeichert!</strong>
+                </div>
+                <div class="pull-right" style="padding-right: 15px; cursor: pointer;" ng-click="hideThis = true;"><i class="fa fa-times"></i></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Kunden-Informationen</h3>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="form-group col-xs-6">
+                    <label for="firstName">Vorname</label>
+                    <input type="text" class="form-control" id="firstName" disabled ng-model="formData.firstName">
+                </div>
+                <div class="form-group col-xs-6">
+                    <label for="lastName">Nachname</label>
+                    <input type="text" class="form-control" id="lastName" disabled ng-model="formData.lastName">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-xs-9">
+                    <label for="street">Straße</label>
+                    <input type="text" class="form-control" id="street" disabled ng-model="formData.street">
+                </div>
+                <div class="form-group col-xs-3">
+                    <label for="houseNumber">Hausnummer</label>
+                    <input type="text" class="form-control" id="houseNumber" disabled ng-model="formData.houseNumber">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group  col-xs-4">
+                    <label for="postcode">Postleitzahl</label>
+                    <input type="text" class="form-control" id="postcode" disabled ng-model="formData.postcode">
+                </div>
+                <div class="form-group col-xs-8">
+                    <label for="city">Stadt</label>
+                    <input type="text" class="form-control" id="city" disabled ng-model="formData.city">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-12">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" id="email" disabled ng-model="formData.email">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Bestellungsübersicht</h3>
+            </div>
+            <div class="col-sm-8">
+                <div id="content">
+                    <!-- Here the Calculation will be injected by augenglueck.js -->
+                </div>
+                <div class="calculation col-xs-12" ng-show="$root.frameSelected">
+                    <table class="table col-xs-12">
+                        <tbody>
+                            <tr>
+                                <th class="col-xs-3"> + Fassung</th>
+                                <td style="text-align: left;">{{$root.selectedFrame.name}}</td>
+                                <td class="calculate_price">{{selectedFrame.price}},-&nbsp;€</td>
+                            </tr>
+                            <tr ng-if="$root.isDiscount">
+                                <th>Rabatt</th>
+                                <td></td>
+                                <td class="calculate_price">
+                                    <input id="discount" type="number" class="form-control" style="width: 50px; display: inline;" size="7" placeholder="{{initialDiscount}}" ng-model="$root.discountAmount" ng-change="calculateTotal()">
+                                </td>
+                            </tr>
+                            <tr ng-if="!$root.isDiscount">
+                                <th style="border-top: 1px solid black">Gesamt</th>
+                                <td style="border-top: 1px solid black"></td>
+                                <td style="border-top: 1px solid black" class="calculate_price">{{$root.totalAfterFrame}},-&nbsp;€</td>
+                            </tr>
+                            <tr ng-if="$root.isDiscount">
+                                <th style="border-top: 1px solid black;">Gesamt</th>
+                                <td style="border-top: 1px solid black;"></td>
+                                <td class="calculate_price" style="border-top: 1px solid black;">{{$root.totalAfterDiscount}},-&nbsp;€</td>
+                            </tr>
+                            <tr ng-if="$root.isFunding">
+                                <th style="border-top: 1px solid black" class="col-xs-3">Raten</th>
+                                <td style="border-top: 1px solid black; text-align: left;">{{$root.fundingMounts}}&nbsp;Monate</td>
+                                <td style="border-top: 1px solid black;" class="calculate_price">á&nbsp;{{$root.fundingAmount}}&nbsp;€</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <button style="width:110px; margin-right:20px;" type="button" class="btn btn-default no-print" ng-click="cancel()" ng-hide="isBought || isSaved">Abbrechen</button>
+        <button style="width:110px; margin-right:20px;" type="button" class="btn btn-default no-print" ng-click="close()" ng-show="isBought || isSaved">Schließen</button>
+        <div class="btn-group" ng-hide="isBought || isSaved">
+            <button style="width:110px" type="button" class="btn btn-default no-print" ng-click="previousStep('enterCustomerInformation')">Zurück</button>
+            <button style="width:110px" type="submit" class="btn btn-primary no-print" ng-click="orderLiable()">Bestellen</button>
+        </div>
+        <button style="width:110px" type="submit" class="btn btn-primary no-print" ng-click="print()" ng-show="isBought">Drucken</button>
+        <button style="width:110px; margin-left:20px;" type="button" class="btn btn-success no-print" ng-click="saveOrder()" ng-hide="isSaved || isBought">Speichern</button>
+    </form>
+</div>

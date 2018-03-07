@@ -1,0 +1,55 @@
+		<div >
+			<img style="max-height:21px!important;margin-top:28px;" src="tm/augenglueck.logo.svg" alt="augenglück">
+		</div>
+<h1>Matrix-Vergleich</h1>
+<br />
+<br />
+<div class="matrixCompare">
+	
+	<div class="compareFront">
+		<img src="media/spacer.png" />
+		
+		<h2>Beispiel</h2>
+		<h2>Fading-Reduktion</h2>
+		
+		<div class="compareMenu">
+			<div class="compareMenuSide compareMenu_left">
+				<div class="textMenu">
+					<a onclick="compareSwitch('left', 0)" id="textMenuItem_left_0" data-file="compare_scene1_none_left.jpg" class="textMenuItem">ohne</a>
+					<a onclick="compareSwitch('left', 1)" id="textMenuItem_left_1" data-file="compare_scene1_g6_left.jpg" class="textMenuItem">G6</a>
+					<a onclick="compareSwitch('left', 2)" id="textMenuItem_left_2" data-file="compare_scene1_g5_left.jpg" class="textMenuItem">G5</a>
+					<a onclick="compareSwitch('left', 3)" id="textMenuItem_left_3" data-file="compare_scene1_g4_left.jpg" class="textMenuItem">G4</a>
+					<a onclick="compareSwitch('left', 4)" id="textMenuItem_left_4" data-file="compare_scene1_g3_left.jpg" class="textMenuItem">G3</a>
+					<a onclick="compareSwitch('left', 5)" id="textMenuItem_left_5" data-file="compare_scene1_g2_left.jpg" class="textMenuItem">G2</a>
+				</div>
+			</div>
+			<div class="compareMenuSide compareMenu_right">
+				<div class="textMenu">
+					<a onclick="compareSwitch('right', 0)" id="textMenuItem_right_0" data-file="compare_scene1_none_right.jpg" class="textMenuItem">ohne</a>
+					<a onclick="compareSwitch('right', 1)" id="textMenuItem_right_1" data-file="compare_scene1_g6_right.jpg" class="textMenuItem">G6</a>
+					<a onclick="compareSwitch('right', 2)" id="textMenuItem_right_2" data-file="compare_scene1_g5_right.jpg" class="textMenuItem">G5</a>
+					<a onclick="compareSwitch('right', 3)" id="textMenuItem_right_3" data-file="compare_scene1_g4_right.jpg" class="textMenuItem">G4</a>
+					<a onclick="compareSwitch('right', 4)" id="textMenuItem_right_4" data-file="compare_scene1_g3_right.jpg" class="textMenuItem">G3</a>
+					<a onclick="compareSwitch('right', 5)" id="textMenuItem_right_5" data-file="compare_scene1_g2_right.jpg" class="textMenuItem">G2</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="compareMask">
+	</div>
+	
+	<div class="compareBackground">
+		<div class="compareBackgroundSide compareBackground_left" id="compareBackground_left">
+		</div>
+		<div class="compareBackgroundSide compareBackground_right" id="compareBackground_right">
+		</div>
+	</div>
+	
+	<div id="comparePreload"></div>
+	
+</div>
+<script type="text/javascript">
+	compareInit();
+</script>
+<br />

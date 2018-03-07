@@ -1,0 +1,147 @@
+REST-API-DOC
+
+
+******************************************************************************************************************
+What can I make a RESOURCE? 
+ 
+Well, these should be nouns (not verbs!) that make sense from the perspective of the API consumer. 
+
+GET /tickets - Retrieves a list of tickets
+GET /tickets/12 - Retrieves a specific ticket
+POST /tickets - Creates a new ticket
+PUT /tickets/12 - Updates ticket #12
+PATCH /tickets/12 - Partially updates ticket #12
+DELETE /tickets/12 - Deletes ticket #12
+ 
+******************************************************************************************************************  
+Should the endpoint name be singular or PLURAL? 
+
+The keep-it-simple rule applies here. 
+Although your inner-grammatician will tell you it's wrong to describe a single instance of a resource using a plural, 
+the pragmatic answer is to keep the URL format consistent and always use a plural. 
+ 
+******************************************************************************************************************  
+But how do you deal with RELATIONS? 
+
+If a relation can only exist within another resource, RESTful principles provide useful guidance. 
+
+GET /tickets/12/messages - Retrieves list of messages for ticket #12
+GET /tickets/12/messages/5 - Retrieves message #5 for ticket #12
+POST /tickets/12/messages - Creates a new message in ticket #12
+PUT /tickets/12/messages/5 - Updates message #5 for ticket #12
+PATCH /tickets/12/messages/5 - Partially updates message #5 for ticket #12
+DELETE /tickets/12/messages/5 - Deletes message #5 for ticket #12
+
+******************************************************************************************************************
+What about ACTIONS THAT DON'T FIT into the world of CRUD operations?  
+
+Treat it like a sub-resource with RESTful principles. 
+For example, GitHub's API lets you star a gist with PUT /gists/:id/star and unstar with DELETE /gists/:id/star.
+
+******************************************************************************************************************
+SSL everywhere - all the time
+
+Always use SSL. No exceptions. 
+Today, your web APIs can get accessed from anywhere there is internet (like libraries, coffee shops, airports among others). 
+Not all of these are secure. Many don't encrypt communications at all, 
+allowing for easy eavesdropping or impersonation if authentication credentials are hijacked.
+Another advantage of always using SSL is that guaranteed encrypted communications 
+simplifies authentication efforts - you can get away with simple access tokens instead of having to sign each API request.
+
+******************************************************************************************************************
+DOCUMENTATION
+
+An API is only as good as its documentation. The docs should be easy to find and publically accessible. 
+Most developers will check out the docs before attempting any integration effort. 	
+
+******************************************************************************************************************
+VERSIONING
+
+/blog/api/v1
+
+Always version your API. Versioning helps you iterate faster and prevents invalid requests from hitting updated endpoints. 
+It also helps smooth over any major API version transitions as you can continue to offer old API versions for a period of time.
+There are mixed opinions around whether an API version should be included in the URL or in a header. 
+Academically speaking, it should probably be in a header. 
+However, the version needs to be in the URL to ensure browser explorability of the resources across versions 
+(remember the API requirements specified at the top of this post?).
+
+******************************************************************************************************************
+Result FILTERING, SORTING & SEARCHING
+
+It's best to keep the base resource URLs as lean as possible. 
+Complex result filters, sorting requirements and advanced searching (when restricted to a single type of resource) 
+can all be easily implemented as query parameters on top of the base URL.
+
+GET /tickets?state=open. Here, state is a query parameter that implements a filter.
+
+Similar to filtering, a generic parameter sort can be used to describe sorting rules. 
+
+GET /tickets?sort=-priority - Retrieves a list of tickets in descending order of priority
+GET /tickets?sort=-priority,created_at - Retrieves a list of tickets in descending order of priority. Within a specific priority, older tickets are ordered first
+
+Searching: Sometimes basic filters aren't enough and you need the power of full text search. 
+
+GET /tickets?sort=-updated_at - Retrieve recently updated tickets
+GET /tickets?state=closed&sort=-updated_at - Retrieve recently closed tickets
+GET /tickets?q=return&state=open&sort=-priority,created_at - Retrieve the highest priority open tickets mentioning the word 'return'
+
+
+*******************************************************************************************************************
+Overriding the HTTP method
+
+Some HTTP clients can only work with simple GET and POST requests. 
+To increase accessibility to these limited clients, the API needs a way to override the HTTP method. 
+Although there aren't any hard standards here, the popular convention is to accept a request header 
+X-HTTP-Method-Override with a string value containing one of PUT, PATCH or DELETE.
+
+******************************************************************************************************************
+Rate limiting
+
+X-Rate-Limit-Limit - The number of allowed requests in the current period
+X-Rate-Limit-Remaining - The number of remaining requests in the current period
+X-Rate-Limit-Reset - The number of seconds left in the current period
+
+******************************************************************************************************************
+Authentication
+
+A RESTful API should be stateless. 
+This means that request authentication should not depend on cookies or sessions. 
+Instead, each request should come with some sort authentication credentials.
+By always using SSL, the authentication credentials can be simplified to a randomly generated access token that is delivered in the user name field of HTTP Basic Auth.
+The great thing about this is that it's completely browser explorable - the browser will just popup a prompt asking for credentials if it receives a 401 Unauthorized status code from the server.
+However, this token-over-basic-auth method of authentication is only acceptable in cases where it's practical to have the user copy a token from an administration interface to the API consumer environment. 
+In cases where this isn't possible, OAuth 2 should be used to provide secure token transfer to a third party. 
+OAuth 2 uses Bearer tokens & also depends on SSL for its underlying transport encryption.
+An API that needs to support JSONP will need a third method of authentication, as JSONP requests cannot send HTTP Basic Auth credentials or Bearer tokens. 
+In this case, a special query parameter access_token can be used. 
+Note: there is an inherent security issue in using a query parameter for the token as most web servers store query parameters in server logs.
+For what it's worth, all three methods above are just ways to transport the token across the API boundary. The actual underlying token itself could be identical.
+
+*******************************************************************************************************************
+Errors
+
+Just like an HTML error page shows a useful error message to a visitor, an API should provide a useful error message in a known consumable format. 
+The representation of an error should be no different than the representation of any resource, just with its own set of fields.
+The API should always return sensible HTTP status codes. 
+API errors typically break down into 2 types: 400 series status codes for client issues & 500 series status codes for server issues. 
+At a minimum, the API should standardize that all 400 series errors come with consumable JSON error representation. 
+If possible (i.e. if load balancers & reverse proxies can create custom error bodies), this should extend to 500 series status codes.
+
+*******************************************************************************************************************
+HTTP status codes
+
+200 OK - Response to a successful GET, PUT, PATCH or DELETE. Can also be used for a POST that doesn't result in a creation.
+201 Created - Response to a POST that results in a creation. Should be combined with a Location header pointing to the location of the new resource
+204 No Content - Response to a successful request that won't be returning a body (like a DELETE request)
+304 Not Modified - Used when HTTP caching headers are in play
+400 Bad Request - The request is malformed, such as if the body does not parse
+401 Unauthorized - When no or invalid authentication details are provided. Also useful to trigger an auth popup if the API is used from a browser
+403 Forbidden - When authentication succeeded but authenticated user doesn't have access to the resource
+404 Not Found - When a non-existent resource is requested
+405 Method Not Allowed - When an HTTP method is being requested that isn't allowed for the authenticated user
+410 Gone - Indicates that the resource at this end point is no longer available. Useful as a blanket response for old API versions
+415 Unsupported Media Type - If incorrect content type was provided as part of the request
+422 Unprocessable Entity - Used for validation errors
+429 Too Many Requests - When a request is rejected due to rate limiting
+	

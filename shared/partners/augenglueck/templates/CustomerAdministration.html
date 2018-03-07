@@ -1,0 +1,105 @@
+<style>
+  tbody {
+    display: block;
+    max-height: 450px;
+    overflow-y: auto;
+  }
+
+  thead,
+  tbody tr {
+    display: table;
+    width: 100%;
+  }
+
+  thead {
+    font-weight: bold;
+  }
+</style>
+<div ng-controller="customerAdministrationController" ng-swipe-right="previousStep('pricingTableAdministration')" ng-swipe-left="nextStep('statisticsAdministration')">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Kunden Verwaltung</h1>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="btn-group">
+        <button ng-disabled="!sendMailSelectionOn" type="button" class="btn btn-primary" ng-click="sendMail()">E-Mail an Auswahl</button>
+        <button ng-disabled="!sendMailSelectionOn" type="button" class="btn btn-default" ng-click="deselectAll()">Auswahl aufheben</button>
+      </div>
+      <button type="button" class="btn btn-primary" ng-click="openAuctionEmailModal()">E-Mail für Aktion</button>
+    </div>
+    <div class="col-sm-3 pull-right">
+      <div class="input-group">
+        <span class="input-group-addon">
+          <i class="fa fa-search"></i>
+        </span>
+        <input type="text" class="form-control" placeholder="Suchbegriff..." ng-model="searchCustomer" />
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-sm-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <td class="col-sm-1" style="text-align: center; min-width: 90px;">Auswählen</td>
+            <td class="col-sm-2">
+              <a href="#!/customerAdministration" ng-click="sortType = 'firstname'; sortReverse = !sortReverse">
+                Vorname
+                <span ng-show="sortType == 'firstname' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'firstname' && sortReverse" class="fa fa-caret-up"></span>
+              </a>
+            </td>
+            <td class="col-sm-2">
+              <a href="#!/customerAdministration" ng-click="sortType = 'lastname'; sortReverse = !sortReverse">
+                Nachname
+                <span ng-show="sortType == 'lastname' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'lastname' && sortReverse" class="fa fa-caret-up"></span>
+              </a>
+            </td>
+            <td class="col-sm-1">
+              <a href="#!/customerAdministration" ng-click="sortType = 'age'; sortReverse = !sortReverse">
+                Alter
+                <span ng-show="sortType == 'age' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'age' && sortReverse" class="fa fa-caret-up"></span>
+              </a>
+            </td>
+            <td class="col-sm-5">
+              <a href="#!/customerAdministration" ng-click="sortType = 'glasses'; sortReverse = !sortReverse">
+                Brille
+                <span ng-show="sortType == 'glasses' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'glasses' && sortReverse" class="fa fa-caret-up"></span>
+              </a>
+            </td>
+            <td class="col-sm-1">Details</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="customer in customers | orderBy:sortType:sortReverse | filter:searchCustomer">
+            <td class="col-sm-1" style="text-align: center; min-width: 90px;">
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <div class="checkbox checkbox-primary">
+                    <input id="customerSelection_{{$index}}" ng-model="customer.isSelected" ng-click="toggleSelection()" type="checkbox">
+                    <label for="customerSelection_{{$index}}"></label>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td class="col-sm-2" ng-click="toggleSelection(); customer.isSelected ? customer.isSelected= false : customer.isSelected = true;">{{customer.firstname}}</td>
+            <td class="col-sm-2" ng-click="toggleSelection(); customer.isSelected ? customer.isSelected= false : customer.isSelected = true;">{{customer.lastname}}</td>
+            <td class="col-sm-1" ng-click="toggleSelection(); customer.isSelected ? customer.isSelected= false : customer.isSelected = true;">{{customer.age}}</td>
+            <td class="col-sm-5" ng-click="toggleSelection(); customer.isSelected ? customer.isSelected= false : customer.isSelected = true;">{{customer.glasses}}</td>
+            <td class="col-sm-1">
+              <button type="button" class="btn btn-default" ng-click="openCustomerModal()">
+                <i class="fa fa-id-card"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

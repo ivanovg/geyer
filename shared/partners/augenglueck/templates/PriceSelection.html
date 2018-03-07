@@ -1,0 +1,49 @@
+<style>
+	ul.pricesBarUl {
+		margin: 0 auto;
+		display: table;
+		margin-top: -6px;
+		/* background-color: #333; */
+	}
+
+	li.pricesBar {
+		border-right: 1px solid #bbb;
+		line-height: 10px;
+		width: 150px;
+	}
+
+	li.pricesBar a {
+		padding: 14px 16px;
+	}
+
+	li.pricesBar:last-child {
+		border-right: none;
+	}
+
+	/* Change the link color to #111 (black) on hover
+		li a:hover {
+			background-color: #111;
+		}  */
+
+	li.priceSelected a {
+		font-size: 18px;
+	}
+</style>
+<div data-ng-controller="priceSelectionController" ng-swipe-left="nextStep()" ng-swipe-right="previousStep()" style="min-height: 80vh;">
+	<div>
+		<ul class="pricesBarUl">
+			<li ng-show="isArbeitsplatz" class="pricesBar" ng-class="navSubClass(0)">
+				<a href='' ng-click="update(0)">Arbeitsplatz</a>
+			</li>
+			<li ng-show="isEinstaerken" class="pricesBar" ng-class="navSubClass(1)">
+				<a href='' ng-click="update(1)">Einstärken</a>
+			</li>
+			<li ng-show="isGleitsicht" class="pricesBar" ng-class="navSubClass(2)">
+				<a href='' ng-click="update(2)">Gleitsicht</a>
+			</li>
+		</ul>
+	</div>
+	<div id="content">
+		<!-- Inject pricing-tables here! -->
+	</div>
+</div>

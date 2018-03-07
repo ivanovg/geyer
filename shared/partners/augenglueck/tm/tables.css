@@ -1,0 +1,92 @@
+
+span.price,
+span.bigger {
+	font-size: 24px;
+	margin-bottom: -5px;
+}
+span.uvp {
+	font-size: 10px;
+}
+
+.table {
+	margin-bottom: 0px !important;
+}
+
+.table table.prices {
+	border: none;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+.table table.prices td,
+.table table.prices th {
+	font-weight: normal;
+	font-size: 12px;
+	padding: 14px 8px;
+	text-align: center;
+	border: 1px white solid;
+	/*
+	min-width: 140px;
+	*/
+}
+
+.table table.prices thead th {
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.table table.prices th.head {
+	background-color: #e46c0b;
+	color: #ffffff;
+}
+.table table.prices .info {
+	background-color: #595959;
+	color: #ffffff;
+}
+.table table.prices .empty {
+	background-color: rgba(239, 237, 237, 0.98);
+	color: #ffffff;
+}
+.table table.prices .plain {
+	background-color: #ffffff;
+	color: #000000;
+	text-align: left;
+}
+.table table.prices .price {
+	background-color: #ccc;
+}
+
+.table table.prices tr td {
+	transition: opacity .5s;
+}
+
+.table table.prices tr.rowSelected th, 
+.table table.prices tr.rowSelected td {
+	/*
+	border: 4px solid #e46c0b;
+	border-left: none;
+	border-right: none;
+	*/
+}
+.table table.prices th.colSelected,
+.table table.prices td.colSelected {
+	/*
+	border: 4px solid #e46c0b;
+	border-top: none;
+	border-bottom: none;
+	*/
+}
+.table table.prices tr.rowSelected td.colSelected,
+.table table.prices tr td.selected {
+	/* border: none; */
+	background-color: #aaa;
+}
+
+.table table.prices tr td.shimDown {
+	opacity: .25;
+}
+.table table.prices tr.rowSelected td.shimDown {
+	opacity: 1;
+}

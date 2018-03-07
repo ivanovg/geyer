@@ -1,0 +1,115 @@
+<div class="modal-content modal-size">
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-sm-8">
+                <h3 class="modal-title" id="modal-title">Kundenauswahl</h3>
+            </div>
+            <div class="col-sm-4">
+                <button type="button" style="border: none" class="btn btn-default pull-right" ng-click="close()"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div ng-show="customersSelected">
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="col-sm-6">Vorname</th>
+                                    <th class="col-sm-6">Name</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="customer in customers" ng-hide="!customer.isSelected">
+                                    <td class="col-sm-6">{{customer.firstname}}</td>
+                                    <td class="col-sm-6">{{customer.lastname}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group col-sm-6">
+                                <label for="dateOfBirth">Geburtsdatum</label>
+                                <input type="date" class="form-control" id="dateOfBirth" ng-model="customerSelection.dateOfBirth"
+                                       placeholder="yyyy-MM-dd" min="1900-01-01" max="{{today}}" ng-change="applyDateOfBirth()">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="lastPurchaseDate">Letztes Kaufdatum</label>
+                                <input type="date" class="form-control" id="lastPurchaseDate" ng-model="customerSelection.lastPurchaseDate" ng-change="applyLastPurchaseDate()">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="totalSalesVolume">Umsatz Gesamt</label>
+                                <input type="number" class="form-control" id="totalSalesVolume" ng-model="customerSelection.totalSalesVolume" ng-change="applyTotalSalesVolume()">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="totalSalesInYear">Umsatz Yahr 2016</label>
+                                <input type="number" class="form-control" id="totalSalesInYear" ng-model="customerSelection.totalSalesInYear" ng-change="applyTotalSalesInYear()">
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h3>Glastyp</h3>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-4" ng-repeat="typeOfGlasses in glassesTypes track by $index">
+                                    <div class="checkbox checkbox-primary">
+                                        <input id="{{typeOfGlasses.type}}" type="checkbox" ng-model="glassesTypes[$index].value" ng-change="applyTypeOfGlasses(typeOfGlasses.type)">
+                                        <label for="{{typeOfGlasses.type}}">{{typeOfGlasses.type}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button style="width:110px" type="button" class="btn btn-primary" ng-click="customersSelected = false">Liste erstellen</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-hide="customersSelected">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="message">Nachricht</label>
+                        <textarea rows="6" id="message" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <button style="width:110px" type="button" class="btn btn-primary" ng-click="back()">Zurück</button>
+            <button style="width:110px" type="submit" class="btn btn-primary" ng-click="sendAuction()">Senden</button>
+            <br/>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td class="col-sm-3">Vorname</td>
+                                <td class="col-sm-3">Name</td>
+                                <td class="col-sm-5">Email</td>
+                                <td class="col-sm-1">Entfernen</td>
+                            </tr>
+                        </thead>
+                        <tbody style="max-height: 350px">
+                            <tr ng-repeat="customer in customers" ng-show="customer.isSelected">
+                                <td class="col-sm-3">{{customer.firstname}}</td>
+                                <td class="col-sm-3">{{customer.lastname}}</td>
+                                <td class="col-sm-5">{{customer.mail}}</td>
+                                <td class="col-sm-1">
+                                    <button type="button" class="btn btn-default" ng-click="removeFromList(customer)">
+                                        <i class="glyphicon glyphicon-remove-circle"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+<div data-ng-controller="customerInputController" ng-swipe-left="nextStep('orderOverview')" ng-swipe-right="previousStep('orderOptions')"
+    style="min-height: 80vh;">
+    <form id="customerInformationForm" name="customerInformationForm">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Kunden-Informationen</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Stammdaten</h1>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-sm-8">
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label for="firstName">Vorname</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="Max" ng-model="formData.firstName" ng-required="true">
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label for="lastName">Nachname</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="Mustermann" ng-model="formData.lastName" ng-required="true">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-9">
+                        <label for="street">Straße</label>
+                        <input type="text" class="form-control" id="street" placeholder="Musterstraße" ng-model="formData.street" ng-required="true">
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="houseNumber">Hausnummer</label>
+                        <input type="text" class="form-control" id="houseNumber" placeholder="541" ng-model="formData.houseNumber" ng-required="true">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group  col-sm-4">
+                        <label for="postcode">Postleitzahl</label>
+                        <input type="text" class="form-control" id="postcode" placeholder="12345" ng-model="formData.postcode" ng-required="true">
+                    </div>
+                    <div class="form-group col-sm-8">
+                        <label for="city">Stadt</label>
+                        <input type="text" class="form-control" id="city" placeholder="Musterhausen" ng-model="formData.city" ng-required="true">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="email" placeholder="Max.Mustermann@example.com" ng-model="formData.email" ng-required="true">
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+        <br />
+        <div class="row">
+            <div class="col-sm-12">
+                <button style="width:110px; margin-right:20px;" type="button" class="btn btn-default" ng-click="cancel()">Abbrechen</button>
+                <div class="btn-group">
+                    <button style="width:110px" type="button" class="btn btn-default" ng-click="previousStep('orderOptions')">Zurück</button>
+                    <button style="width:110px" type="submit" class="btn btn-primary" ng-disabled="customerInformationForm.$invalid" ng-click="nextStep('orderOverview')">Weiter</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

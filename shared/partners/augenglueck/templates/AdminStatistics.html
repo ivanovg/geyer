@@ -1,0 +1,50 @@
+<div ng-controller="adminStatisticsController" ng-swipe-right="previousStep('customerAdministration')" style="min-height: 80vh;">
+        <div class="row">
+                <div class="col-sm-12">
+                        <h1>Statistiken</h1>
+                </div>
+        </div>
+        <div class="row">
+                <div class="row col-lg-10 col-sm-10">
+                        <div class="col-sm-2">
+                            <div class="checkbox checkbox-primary checkbox-lg">
+                                <input id="gleitsicht" type="checkbox" ng-model="gleitsichtSelected" ng-change="setSelectDatasets()">
+                                <label style="padding-left: 8px; font-size: 16px;" for="gleitsicht">Gleitsicht</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="checkbox checkbox-primary checkbox-lg">
+                                <input id="indoor" type="checkbox" ng-model="indoorSelected" ng-change="setSelectDatasets()">
+                                <label style="padding-left: 8px; font-size: 16px;" for="indoor">Indoor</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="checkbox checkbox-primary checkbox-lg">
+                                <input id="Ferne" type="checkbox" ng-model="ferneSelected" ng-change="setSelectDatasets()">
+                                <label style="padding-left: 8px; font-size: 16px;" for="Ferne">Ferne</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="checkbox checkbox-primary checkbox-lg">
+                                <input id="Naehe" type="checkbox" ng-model="naeheSelected" ng-change="setSelectDatasets()">
+                                <label style="padding-left: 8px; font-size: 16px;" for="Naehe">Nähe</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="checkbox checkbox-primary checkbox-lg">
+                                <input id="Sport" type="checkbox" ng-model="sportSelected" ng-change="setSelectDatasets()">
+                                <label style="padding-left: 8px; font-size: 16px;" for="Sport">Sport</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                                <div class="checkbox checkbox-primary checkbox-lg">
+                                    <input id="Hobby" type="checkbox" ng-model="hobbySelected" ng-change="setSelectDatasets()">
+                                    <label style="padding-left: 8px; font-size: 16px;" for="Hobby">Hobby</label>
+                                </div>
+                            </div>
+                    </div>
+        </div>
+        <div class="row">
+            <canvas id="myChart">dfsdf</canvas>    
+        </div>
+</div>

@@ -1,0 +1,6 @@
+<div data-ng-controller="matrixComparisonController" ng-swipe-left="nextStep('calculationIndex')" ng-swipe-right="previousStep('visualAreas')">
+    <a name="page6" title="Matrix-Vergleich" class="static_content"></a>
+	<div class="content_page">
+		%%%INCLUDE(matrixCompare.sstpl)%%%
+	</div>
+</div>
