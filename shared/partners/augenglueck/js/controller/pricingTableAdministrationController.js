@@ -263,6 +263,8 @@
                     var categoryIndex = classes[2].substring(2, classes[2].length);
                     var glassesIndex = classes[3].substring(2, classes[2].length);
                     var itemIndex = classes[4].substring(2, classes[2].length);
+                    element.style.background = "#ccc";
+                    console.log(element);
                     $scope.replaceProductFromPriceList(categoryIndex, glassesIndex, itemIndex);
                 }
 
@@ -289,6 +291,45 @@
                 });
                 modalInstance.result.then(function(){}, function(){});
             }
+
+            $scope.lightGray = function () {
+                var emptyElements = document.getElementsByClassName("empty");
+                for (var i = 0; i < emptyElements.length; i++) {
+                    emptyElements.item(i).parentElement.parentElement.style.background = "rgba(239, 237, 237, 0.98)";
+                }
+            }
+
+            $scope.setAuctionClass = function () {
+                var auctionElements = document.getElementsByClassName("td-auction");
+                for (var i = 0; i < auctionElements.length; i++) {
+                    auctionElements.item(i).parentElement.style.background = "#e46c0b";
+                    auctionElements.item(i).parentElement.style.color = "white";
+                }
+            }
+
+            $scope.setPriceClass = function () {
+                var auctionElements = document.getElementsByClassName("td-price");
+                for (var i = 0; i < auctionElements.length; i++) {
+                    auctionElements.item(i).parentElement.parentElement.style.background = "#ccc";
+                    auctionElements.item(i).parentElement.parentElement.style.color = "black";
+                }
+            }
+
+            $scope.setEmptyClass = function () {
+                var auctionElements = document.getElementsByClassName("td-empty");
+                for (var i = 0; i < auctionElements.length; i++) {
+                    auctionElements.item(i).parentElement.parentElement.style.background = "rgba(239, 237, 237, 0.98)"
+                    auctionElements.item(i).parentElement.parentElement.style.color = "black"
+                }
+            }
+
+            // $scope.fillGray = function () {
+            //     var emptyElements = document.getElementsByClassName("full");
+            //     console.log(emptyElements);
+            //     for (var i = 0; i < emptyElements.length; i++) {
+            //         emptyElements.item(i).parentElement.parentElement.style.background = "#ccc";
+            //     }
+            // }
             // ==================================================================================================
         }
     ])
