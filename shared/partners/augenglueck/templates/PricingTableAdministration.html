@@ -173,12 +173,24 @@
                                             </td>
 
                                             <td ng-repeat="item in glasses.quality track by $index" ng-init="itemIndex = $index"
-                                                    class="text-center droppable ca{{categoryIndex}} gl{{glassesIndex}} it{{itemIndex}} td-price"
+                                                    class="text-center droppable ca{{categoryIndex}} gl{{glassesIndex}} it{{itemIndex}}"
                                                 ng-mouseup="replaceProductFromPriceList(categoryIndex, glassesIndex, itemIndex)">
-                                                <span class="text-center droppable ca{{categoryIndex}} gl{{glassesIndex}} it{{itemIndex}} td-price"
-                                                      ng-if="item.auction.isSet !== '' && today >= item.auction.start && today <= item.auction.end">{{item.auction.price}},-&nbsp;€</span>
-                                                <span class="text-center droppable ca{{categoryIndex}} gl{{glassesIndex}} it{{itemIndex}} td-price"
-                                                      ng-if="!(item.auction.isSet !== '' && today >= item.auction.start && today <= item.auction.end)">{{item.price.retail !== -1 ? item.price.retail + ",- €" : ""}}</span>
+                                                <span class="text-center droppable ca{{categoryIndex}} gl{{glassesIndex}} it{{itemIndex}} td-auction"
+                                                      ng-if="item.auction.isSet && today >= item.auction.start && today <= item.auction.end" ng-init="setAuctionClass()">
+                                                    <strike>{{item.price.retail}},-&nbsp;€</strike>
+                                                    <br>
+                                                    {{item.auction.price}},-&nbsp;€
+                                                </span>
+                                                <span class="text-center droppable ca{{categoryIndex}} gl{{glassesIndex}} it{{itemIndex}}"
+                                                      ng-if="!(item.auction.isSet !== '' && today >= item.auction.start && today <= item.auction.end)">
+                                                    <span class="text-center droppable ca{{categoryIndex}} gl{{glassesIndex}} it{{itemIndex}} td-price"
+                                                                 ng-if="item.price.retail !== -1" ng-init="setPriceClass()">
+                                                        {{item.price.retail}},-&nbsp;€
+                                                    </span>
+                                                    <span class="text-center droppable ca{{categoryIndex}} gl{{glassesIndex}} it{{itemIndex}} td-empty"
+                                                          ng-if="item.price.retail === -1" ng-init="setEmptyClass()">
+                                                    </span>
+                                                </span>
                                             </td>
                                         </tr>
                                         </tbody>
